@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YSongOS NEXT</title>
+    <style>
+        /* 通用样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* 黑色背景 */
+            color: #eaeaea; /* 浅灰色文字 */
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            background-color: #000000; /* 深黑色背景 */
+            color: #fff;
+            padding: 10px 0; /* 减小高度 */
+            text-align: center;
+            font-size: 22px; /* 减小字体大小 */
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+        }
+
+        /* 下拉菜单 */
+        nav {
+            position: relative;
+        }
+
+        .menu {
+            list-style: none;
+            background-color: #454545; /* 深黑色背景 */
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu li {
+            position: relative;
+            padding: 12px 25px; /* 减小菜单项的高度 */
+            color: #fff; /* 白色文字 */
+            cursor: pointer;
+        }
+
+        .menu li:hover {
+            background-color: #333; /* 深灰色背景 */
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #1e1e1e;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .submenu li {
+            padding: 10px 20px;
+            color: #fff; /* 白色文字 */
+        }
+
+        .submenu li:hover {
+            background-color: #333; /* 深灰色背景 */
+        }
+
+        .menu li:hover .submenu {
+            display: block;
+        }
+
+        /* 主体内容 */
+        .content {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #1e1e1e; /* 深黑色背景 */
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #1e90ff; /* 蓝色标题 */
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        /* 特性列表 */
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .feature {
+            background-color: #333; /* 深灰色背景 */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            font-size: 22px;
+            color: #1e90ff; /* 蓝色标题 */
+            margin-bottom: 10px;
+        }
+
+        .feature img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .feature p {
+            margin-top: 15px;
+        }
+
+        /* 功能介绍区块 */
+        .feature-detail {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-detail h3 {
+            font-size: 24px;
+            color: #1e90ff;
+            margin-bottom: 15px;
+        }
+
+        .feature-detail p {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .feature-detail img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* 按钮 */
+        .cta-button {
+            background-color: #1e90ff; /* 蓝色按钮 */
+            color: #121212; /* 黑色文字 */
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #3b7bbb; /* 蓝色按钮悬停 */
+        }
+
+        /* 按钮容器 */
+        .cta-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;  /* 设置按钮上方的间距 */
+        }
+
+        /* 按钮 */
+        .cta-button {
+            background: linear-gradient(145deg, #1e90ff, #0066cc);  /* 渐变背景 */
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px; /* 圆角效果 */
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2), -2px -2px 10px rgba(255, 255, 255, 0.2); /* 高级阴影效果 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(145deg, #0066cc, #1e90ff);  /* 悬停时反转渐变效果 */
+            transform: translateY(-5px);  /* 鼠标悬停时，按钮轻微上浮 */
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3), -2px -2px 15px rgba(255, 255, 255, 0.3); /* 悬停阴影效果 */
+        }
+
+        .cta-button:active {
+            transform: translateY(0);  /* 点击时按钮恢复 */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), -2px -2px 5px rgba(255, 255, 255, 0.2); /* 点击时较小的阴影 */
+        }
+        /* 底部 */
+        footer {
+            background-color: #000000; /* 深黑色背景 */
+            color: #fff;
+            text-align: center;
+            padding: 10px 0; /* 减小底部高度 */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* 添加顶部阴影 */
+        }
+
+ /* 全屏引导页面 */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 100%视口高度 */
+    background: url('images/hero-bg-2.1.jpg') no-repeat center center/cover; /* 背景图片，确保图片覆盖整个区域 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;  /* 白色文字 */
+    text-align: center;
+    font-family: Arial, sans-serif;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5); /* 内部阴影增加深度 */
+}
+
+.hero-content h1 {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase; /* 全大写，增加视觉冲击力 */
+}
+
+.hero-content .highlight {
+    font-size: 70px;  /* 放大 2.1 部分 */
+    color: #ff6f61;  /* 使用强调颜色（红色） */
+    font-weight: bold;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    max-width: 600px; /* 设置最大宽度避免文字过长 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero button {
+    background: linear-gradient(145deg, #1e90ff, #0066cc);  /* 渐变背景 */
+    color: white;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero button:hover {
+    background: linear-gradient(145deg, #0066cc, #1e90ff);  /* 悬停时反转渐变效果 */
+    transform: translateY(-5px);  /* 按钮轻微上浮 */
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);  /* 增加悬停阴影 */
+}
+
+.hero button:active {
+    transform: translateY(0);  /* 点击时按钮恢复 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+/* 粒子效果容器 */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1; /* 确保粒子背景在内容后面 */
+}
+
+/* 下滑箭头样式 */
+.scroll-down {
+    position: absolute;
+    bottom: 25px; /* 设置箭头位置 */
+    /* 控制盒子居中 */
+    margin:auto;
+    position: absolute;
+    right: 0;
+    left:0;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite; /* 增加下滑箭头的弹跳效果 */
+}
+
+.scroll-down img {
+    width: 100px;  /* 设置箭头图标的大小 */
+    opacity: 0.8;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px); /* 箭头上下弹跳 */
+    }
+}
+        /* 暗色模式 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212; /* 黑色背景 */
+                color: #eaeaea; /* 浅灰色文字 */
+            }
+
+            header {
+                background-color: #1e1e1e; /* 深黑色背景 */
+            }
+
+            .content {
+                background-color: #1e1e1e;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .section-title {
+                color: #1e90ff;
+            }
+
+            .feature {
+                background-color: #333;
+                color: #eaeaea;
+            }
+
+            .cta-button {
+                background-color: #1e90ff;
+                color: #121212;
+            }
+
+            .cta-button:hover {
+                background-color: #3b7bbb;
+            }
+
+            footer {
+                background-color: #1e1e1e;
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,  // 粒子数量
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"  // 粒子的颜色
+                },
+                "shape": {
+                    "type": "circle",  // 粒子的形状
+                    "stroke": {
+                        "width": 0
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,  // 粒子透明度
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1
+                    }
+                },
+                "size": {
+                    "value": 3,  // 粒子大小
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 4,
+                        "size_min": 0.1
+                    }
+                },
+                "line_linked": {
+                    "enable": false  // 不连接粒子
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out"
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false
+                    },
+                    "onclick": {
+                        "enable": false
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+        <script>
+            // 平滑滚动到 YSongOS NEXT 2.1 全屏引导界面
+            document.querySelector("button[onclick='window.location.href=\"#intro-2-1\"']").addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('intro-2-1').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        </script>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>您的下一个系统，何必是Windows</h1>
+            <p>探索全新的 YSongOS NEXT 系统，享受更高效、更智能的数字生活体验。</p>
+            <!-- 第一个立即了解按钮 -->
+<button onclick="window.location.href='#intro-2-1'">立即了解</button>
+            <div class="scroll-down">
+                <a href="#intro"><img src="images/Under_head_toomin_use.png" alt="下滑箭头"></a> <!-- 下滑箭头 -->
+            </div>
+        </div>
+    </section>
+<!-- 全屏引导部分（YSongOS NEXT 2.1）-->
+<section id="intro-2-1" class="hero">
+    <div id="particles-js" class="hero-background"></div> <!-- 粒子效果容器 -->
+    <div class="hero-content">
+        <h1>现已隆重推出 YSongOS NEXT <span class="highlight">2.1</span></h1>
+        <p>探索全新升级的系统体验，享受更强大的功能和更高效的性能。</p>
+
+        <div class="scroll-down">
+            <a href="#features"><img src="images/Under_head_toomin_use.png" alt="下滑箭头"></a> <!-- 下滑箭头 -->
+        </div>
+    </div>
+</section>
+    </section>
+
+<header>
+    YSongOS NEXT 系统
+</header>
+
+<nav>
+    <ul class="menu">
+        <li>首页</li>
+        <li>关于我们
+            <ul class="submenu">
+                <li>公司简介</li>
+                <li>团队介绍</li>
+                <li>联系我们</li>
+            </ul>
+        </li>
+        <li>特性</li>
+        <li>下载</li>
+        <li>支持</li>
+    </ul>
+</nav>
+
+<div class="content">
+    <section class="section">
+        <h2 class="section-title">核心特性</h2>
+        <div class="feature-list">
+            <div class="feature" onclick="location.href='#tech-future'">
+                <h3>科技引领未来</h3>
+                <p>YSongOS NEXT 融入前沿科技，采用机器学习和 AI 功能，自动优化资源分配，智能调节性能与功耗，提供最佳使用体验。</p>
+            </div>
+            <div class="feature" onclick="location.href='#speed-performance'">
+                <h3>极速性能</h3>
+                <p>高效内核优化，提供极速启动和流畅响应。无论是日常办公还是大型软件运行，YSongOS NEXT 都能轻松应对。</p>
+            </div>
+            <div class="feature" onclick="location.href='#easy-operation'">
+                <h3>便捷操作</h3>
+                <p>简洁直观的界面设计，支持语音助手、手势控制、快捷键操作等，提升操作效率和便捷性。</p>
+            </div>
+            <div class="feature" onclick="location.href='#security'">
+                <h3>安全保障</h3>
+                <p>内置实时安全扫描、强力防火墙、加密技术等，保护你的数据免受病毒、恶意软件和黑客攻击。</p>
+            </div>
+            <div class="feature" onclick="location.href='#privacy'">
+                <h3>隐私保护</h3>
+                <p>严格遵守隐私保护原则，用户数据经过加密存储，强大的权限管理确保你的信息安全。</p>
+            </div>
+            <div class="feature" onclick="location.href='#cloud-service'">
+                <h3>智能云服务</h3>
+                <p>支持跨平台同步和无缝切换，确保在任何设备上都能继续工作和娱乐。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">各功能介绍</h2>
+        <div id="tech-future" class="feature-detail">
+            <h3>科技引领未来</h3>
+            <p>YSongOS NEXT 融入前沿科技，采用机器学习和 AI 功能，自动优化资源分配，智能调节性能与功耗，提供最佳使用体验。</p>
+        </div>
+        <div id="speed-performance" class="feature-detail">
+            <h3>极速性能</h3>
+            <p>高效内核优化，提供极速启动和流畅响应。无论是日常办公还是大型软件运行，YSongOS NEXT 都能轻松应对。</p>
+        </div>
+        <div id="easy-operation" class="feature-detail">
+            <h3>便捷操作</h3>
+            <p>全新任务管理器布局，探索更多功能，掌握文件不一样的用法</p>
+            <img src="images/ph_1.jpg">
+            <p>简洁直观的桌面设计，搭配全新动态壁纸</p>
+            <img src="images/ph_2.jpg">
+            <p>简洁直观的界面设计，支持语音助手、手势控制、快捷键操作等，提升操作效率和便捷性。</p>
+        </div>
+        <div id="security" class="feature-detail">
+            <h3>安全保障</h3>
+            <p>内置实时安全扫描、强力防火墙、加密技术等，保护你的数据免受病毒、恶意软件和黑客攻击。</p>
+        </div>
+        <div id="privacy" class="feature-detail">
+            <h3>隐私保护</h3>
+            <p>严格遵守隐私保护原则，用户数据经过加密存储，强大的权限管理确保你的信息安全。</p>
+        </div>
+        <div id="cloud-service" class="feature-detail">
+            <h3>智能云服务</h3>
+            <p>支持跨平台同步和无缝切换，确保在任何设备上都能继续工作和娱乐。</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">立即体验 YSongOS NEXT 系统</h2>
+        <p>加入 YSongOS NEXT 系统，享受更高效、更智能的数字生活体验。</p>
+        <div class="cta-container">
+            <button class="cta-button" onclick="window.location.href='www.ysongosnext.com'">立即下载</button>
+        </div>
+    </section>
+</div>
+
+<footer>
+    &copy; 2024 YSongOS NEXT. All Rights Reserved.
+</footer>
+
+</body>
+</html>
